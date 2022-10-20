@@ -1,0 +1,339 @@
+\ProcessOptions\relax
+\documentclass[9pt, legalpaper]{article}  
+\usepackage[english]{babel}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+
+
+% Set document margins
+\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.6in]{geometry}
+
+\usepackage[familydefault,light]{Chivo} %% Option 'familydefault' only if the base font of the document is to be sans serif
+
+% Set font face
+\usepackage{fontspec}
+\setmainfont[SmallCapsFeatures={Renderer=Basic},
+Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
+
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent	
+
+% Required for ifthenelse statements
+\usepackage{etoolbox} 
+
+%No Page numbers
+\pagestyle{empty}
+
+%Flexible Tables
+\usepackage{tabu}
+
+% For custom margins
+\usepackage{changepage}
+
+% To customize lists
+\usepackage{enumitem}
+% Remove left margin from lists, suppress vertical item separation and set top 
+% separation to a negative value to suppress a single parskip before lists
+\setlist{leftmargin=*, noitemsep, topsep=-1\parskip}
+
+% For spcaed small caps
+\usepackage{microtype}
+
+\DeclareMicrotypeSet*{smallcapsi} { 
+	encoding = {OT1,T1,T2A,LY1,OT4,QX,T5,TS1,EU1,EU2},
+	shape    = {sc*,si,scit}
+}
+
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent	
+\usepackage{amssymb}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+
+%--------------------------------------------------------------------------------
+%                                    Constants                                  -
+%--------------------------------------------------------------------------------
+\def\afterheaderspace{3pt}
+\def\beforesectionheaderspace{4.75pt}
+\def\sectionheadermargin{6pt}
+\def\aftersectionheaderspace{-4pt}
+\def\sectionheaderhrlueheight{0.5pt}
+\def\aftersinglelinesubsectionheaderspace{-18.5pt}
+\def\afterdoublelinesubsectionheaderspace{-10pt}
+\def\aftermultilinesubsectionheaderspace{-6pt}
+\def\afteremptysubsectionheaderspace{3pt}
+\def\subsectionmargin{9pt}
+\def\aftersubsectionspace{4pt}
+%--------------------------------------------------------------------------------
+%                            Header Setup and Printing                          -
+%--------------------------------------------------------------------------------
+
+% Address
+\makeatletter
+
+\newcommand\address[1]{\def\@address{#1}}
+\address{}
+
+\newcommand\printaddress{
+	\scriptsize{\@address}
+}
+
+\makeatother
+
+% Name
+\makeatletter
+
+\newcommand\name[1]{\def\@name{#1}}
+\name{}
+
+\newcommand\printname{
+	\textbf{\Large\textls[110]{\textsc{\@name}}}
+}
+
+\makeatother
+
+% Contacts
+\makeatletter
+
+\newcommand\contacts[1]{\def\@contacts{#1}}
+\contacts{}
+
+\newcommand\printcontacts{
+	\scriptsize{\@contacts}
+}
+
+\makeatother
+
+\makeatletter
+\newcommand\makeheader{
+	\begin{center}
+		\begin{tabu} to 1\textwidth { X[l,m] X[2,c,m] X[r,m] }
+			\printaddress & \printname & \printcontacts \\
+		\end{tabu}	
+	\end{center}
+	\vspace*{\afterheaderspace}
+}
+\makeatother
+
+%--------------------------------------------------------------------------------
+%                            Sections and Subsections                           -
+%--------------------------------------------------------------------------------
+
+% Print a section header
+\makeatletter
+\newenvironment{cvsection}[1]{
+	\vspace*{\beforesectionheaderspace}
+	% Set text margins to equal \tabcolsep (6pt by default)
+	\begin{adjustwidth}{\sectionheadermargin}{\sectionheadermargin}
+		\textsc{\textbf{#1}}
+	\end{adjustwidth}
+	\smallskip
+	\hrule height \sectionheaderhrlueheight
+	\vspace*{\aftersectionheaderspace}
+}{}
+\makeatother
+% Print a subsection
+\makeatletter
+% Define toggles checking if titles were defined
+\newtoggle{lefttitledefined}
+\newtoggle{centertitledefined}
+\newtoggle{righttitledefined}
+
+\newenvironment{cvsubsection}[4][1]{
+	\notblank{#2}{\toggletrue{lefttitledefined}}{}
+	\notblank{#3}{\toggletrue{centertitledefined}}{}
+	\notblank{#4}{\toggletrue{righttitledefined}}{}
+	\ifboolexpr{togl {lefttitledefined} or togl {centertitledefined} or togl {righttitledefined}}{
+		\begin{tabu} to 1\textwidth { X[l,p] X[c,p] X[r,p] }
+			\textbf{#2} & \textbf{#3} & \textbf{#4} \\
+		\end{tabu}
+		% Add space according to the specidied number of lines
+		\ifnumcomp{#1}{=}{1}{\vspace*{\aftersinglelinesubsectionheaderspace}}{
+			\ifnumcomp{#1}{=}{2}{\vspace*{\afterdoublelinesubsectionheaderspace}}{
+				\vspace*{\aftermultilinesubsectionheaderspace}
+			}
+		}
+	}{
+		\vspace*{\afteremptysubsectionheaderspace}
+	}
+	\togglefalse{lefttitledefined}
+	\togglefalse{centertitledefined}
+	\togglefalse{righttitledefined}
+	\begin{adjustwidth}{\subsectionmargin}{\subsectionmargin}
+}
+{
+	\end{adjustwidth}
+	\vspace*{\aftersubsectionspace}
+}
+\makeatother
+
+%Applicant's Data
+\name{Joseph Alcantara}
+\address{Silliman University Campus, Dumaguete City, PH}
+\contacts{(+63)919-846-6985 \linebreak josephnicholasalc@icloud.com}
+
+\begin{document}
+\makeheader
+
+\begin{cvsection}{Employment History}
+	\begin{cvsubsection}{Software Engineer}{Archax, Philippines}{February 2021 - Present}
+		\color{darkgray}
+		\begin{itemize}
+			\item Implemented Risk Management for Archax OMS.
+			\item Created High-level design Architecture for some OMS features.
+			\item Implemented API handlers in NodeJS to process data from OMS to DB.
+			\item Created Docker images for the Crypto Matching Engine projects to ease developer environment setup and server deployment.
+			\item Implemented admin API functionalities in the Crypto Matching Engine Library to interface between the Crypto Matching Engine and OMS.
+			\item Implemented a Python test client that will send messages on behalf of the OMS or the admin application.
+			\item Implemented round-robin connection/reconnection logic for preparation for Hot-Warm High-Availability.
+			\item Created a cross-project utility library. Extracted and refactored common helper functions from across projects.
+			\item Implemented a message version check upon logon which validates if both client and the Crypto Matching Engine messages are aligned.
+			\item Implemented a performance tool for the Crypto Matching Engine which will send a payload of orders and calculate acceptable latency metrics.
+			\item Implemented reconnect and timeout logic for non-blocking client connections in the internal library which is consumed by OMS and the Crypto Matching Engine .
+			\item Implemented buffer(executions, orders, etc.) processing and storage by session in the internal library which is consumed by OMS and the Crypto Matching Engine.
+			\item Designed a Metric service that will query all business metrics for ACE-OMS rebalancing
+			\item Designed ACE-OMS rebalancing flow
+			\item Implemented a ace-fix client in Golang to test inbound and outbound messages from the exchange
+		\end{itemize}
+	\end{cvsubsection}
+	\begin{cvsubsection}{Software Engineer}{Retone, Remote}{July 2020 - February 2021}
+		\color{darkgray}
+	\begin{itemize}
+		\item Implemented a Python based C++ code formatter to be called from Bazel.
+		\item Implemented sharding of multiple guitar string renders to increase
+		the speed of magnetic field computation then after merging it.
+		\item Implemented a Bazel script(Starlark) to do an end to end computation of magnetic fields based on magnetic file input.
+		\item Implemented a guitar knob controller which sends and receives data through software based UartReader/Writer, which will then be relayed to the actual MCU.
+	\end{itemize}
+	\end{cvsubsection}
+	\begin{cvsubsection}{Senior Engineer}{CryptoBLK, Hong Kong}{March 2019 - March 2021(Consultant)}
+		\color{darkgray}
+	\begin{itemize}
+		\item Created the ABE token with \textit{Solidity}.
+		\item Integrated the quantum signature scheme Dilithium for Abelian cryptocurrency and exchanged some of the ed25519 computations.
+		\item Created and modified unit-tests and functional with google test and python to further improve code quality.
+		\item Created python scripts to run transaction testing using the built-in JSON RPC.
+		\item Integrated new scheme on quantum proof linkable ring signatures(https://github.com/salrs/salrs).
+		\item Created integration tests, flow test, and contract test and APIs for Corda smart contracts for trade finance applications.
+		\item Implemented backend features on Contour trade finance application specifically in Letter of Credit amendments. \textit{Corda Smart Contracts and Spring}
+	\end{itemize}
+	\end{cvsubsection}
+	\begin{cvsubsection}{Firmware Engineer}{Lexmark, Philippines}{November 2018 - March 2019}
+		\color{darkgray}
+	\begin{itemize}
+		\item Developed a feature to have different handle for Apple SMTP server\textit{(Embedded C++)}.
+		\item Migrated some projects from Unix Makefile to \textit{CMake}.
+		\item Fixed some functional issues on printer firmware code as well as Coverity and Canary issues.
+	\end{itemize}
+	\end{cvsubsection}
+	\begin{cvsubsection}{Software Engineer}{Zcoin, Remote}{July 2018 - September 2018 }
+		\color{darkgray}
+	\begin{itemize}
+		\item DevOps work. Implemented a CI/CD server using Travis CI, Circle CI, Jenkins CI which calls a gitian-builder and results 3 platform builds.
+		\item Integration of new MTP(Merkle Tree Proof) to electrumx server, a python based server for the electrum client.
+	\end{itemize}
+    \end{cvsubsection}
+	\begin{cvsubsection}{Software Engineer}{Horizen, Remote}{January 2018 - June 2018}
+		\color{darkgray}
+	\begin{itemize}
+		\item Integrated Horizen to the Ledger Nano S Hardware Wallet.
+		\item Implemented and integrated Domain fronting with ZenCash Light Wallets\textit{(Arizen wallet, ElectronJS)}.
+		\item Added build capabilities with macOS for Horizen source.
+		\item Developed automated unit tests on Ledger Nano S and Trezor T hardware wallets.
+		\item Integrated advanced daemon specific features for the Horizen Java swing wallet.
+	\end{itemize}
+    \end{cvsubsection}
+	\begin{cvsubsection}{Software Engineer}{NCR Corporation, Philippines}{August 2012 - February 2018}
+		\color{darkgray}
+		\textbf{\textit{Post Office UK, Ltd.}}
+		\begin{itemize}
+			\item Implemented a parser in MFC C++ using the MSXML library to gather data from the service to be shown on the device UI.
+			\item Implemented a scale wrapper for the Avery scale in MFC C++ to integrate the 3rd party scale into the checkout system.
+			\item Created a build machine using Jenkins CI for Post Office UK Integration processes.
+		\end{itemize}
+		\textbf{\textit{Walmart}}
+		\begin{itemize}
+			\item Designed and implemented UI using MFC C++ as language used for the Model and Controller, and XML as for the View.
+			\item Integrated and supported Walmart Mobile Payment for Self Serve Checkout lanes, using MFC C++ and XML.\textit{(Bentonville, AR)}
+			\item Developed a log parser in C\# which uses telnet to connect to the IBM POS and extract the data for efficient log tracing.
+			\item Implemented test scripts for IBM POS to ancticipate changes in messages.
+		\end{itemize}
+		\textbf{\textit{Australia Post Office}}
+		\begin{itemize}
+			\item Developed and integrated AMEX payment in MFC C++ into the Australia Post SST.
+			\item Designed and implemented UI using MFC C++ as language used for the Model and Controller, and XML as for the View.
+		\end{itemize}
+	\end{cvsubsection}
+\end{cvsection}
+
+\begin{cvsection}{Education}
+	\begin{cvsubsection}{Dumaguete City, Philippines}{Silliman University}{June 2007 - March 2012}
+		\color{darkgray}
+		\begin{itemize}
+			\item B.S in Computer Engineering, March 2012
+			\item Undergraduate Coursework: Operating Systems, Data structures and Algorithms, Microcontroller Design, Computer Architecture, C++ Programming, Digital Systems, Control system design
+			\item Thesis work: Android Phone controlled Quadrotor with Bluetooth as medium of communication.
+		\end{itemize}
+	\end{cvsubsection}
+	\begin{cvsubsection}{Remote}{Consensys Academy}{October 2019}
+		\color{darkgray}
+		\begin{itemize}
+			\item Graduated on the October 30 Cohort Bootcamp
+			\item Dapp Development with Ethereum and Solidity
+			\item Project link: https://github.com/josephnicholas/proposal-dapp
+		\end{itemize}
+	\end{cvsubsection}
+\end{cvsection}
+
+\begin{cvsection}{Technical Experience}
+	\color{darkgray}
+	\begin{cvsubsection}{Github Profile}{}{}
+		\begin{itemize}
+			\item www.github.com/josephnicholas
+		\end{itemize}
+	\end{cvsubsection}
+\end{cvsection}
+
+\begin{cvsection}{Additional Experience and Awards}
+	\color{darkgray}
+	\begin{cvsubsection}{}{}{}
+		\begin{itemize}
+			\item \textbf{1st Prize, 1st Engineering Robotics competition:}  Maze Traversal and Line Following category
+		\end{itemize}
+	\end{cvsubsection}
+\end{cvsection}
+
+\begin{cvsection}{Programming languages and Technologies}
+	\color{darkgray}
+	\begin{cvsubsection}{}{}{}
+		\textbf{Language}(arranged according to proficiency, last 3 ones are basic knowledge)
+		\begin{itemize}
+			\item C++11/14/17, C, Kotlin, Python, JavaScript, TypeScript, Solidity, SQL 
+		\end{itemize}
+		\textbf{Paradigms}
+		\begin{itemize}
+			\item Object Oriented Programming, TDD with Catch2 and Google test
+		\end{itemize}
+		\textbf{Libraries}
+		\begin{itemize}
+			\item C++-STL, Boost, Smart Contracts(Corda and Ethereum), Abseil-C++, Radia, Protobuf, Unix Socket Library
+		\end{itemize}
+		\textbf{Database}
+		\begin{itemize}
+			\item PostgresSQL, SQLite
+		\end{itemize}
+		\textbf{Tools}
+		\begin{itemize}
+			\item Visual Studio, CLion, IntelliJ, VSCode, JIRA, SVN, Git, Github, Vim, CMake, Bazel, Docker
+		\end{itemize}
+		\textbf{Platform}
+		\begin{itemize}
+			\item Windows OS, macOS, Linux Ubuntu
+		\end{itemize}
+		\textbf{Frameworks}
+		\begin{itemize}
+			\item Qt, Corda, Ethereum, ReactJS(used only for the Solidity developer bootcamp), Spring, NodeJS, MochaJS
+		\end{itemize}
+	\end{cvsubsection}
+\end{cvsection}
+\end{document}  

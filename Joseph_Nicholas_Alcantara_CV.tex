@@ -179,21 +179,21 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 	\begin{cvsubsection}{Software Engineer}{Archax, Philippines}{February 2021 - Present}
 		\color{darkgray}
 		\begin{itemize}
-			\item Implemented Risk Management for Archax OMS.
+			\item Implemented Risk Limit Management for Archax OMS.
 			\item Created High-level design Architecture for some OMS features.
 			\item Implemented API handlers in NodeJS to process data from OMS to DB.
 			\item Created Docker images for the Crypto Matching Engine projects to ease developer environment setup and server deployment.
-			\item Implemented admin API functionalities in the Crypto Matching Engine Library to interface between the Crypto Matching Engine and OMS.
-			\item Implemented a Python test client that will send messages on behalf of the OMS or the admin application.
-			\item Implemented round-robin connection/reconnection logic for preparation for Hot-Warm High-Availability.
-			\item Created a cross-project utility library. Extracted and refactored common helper functions from across projects.
-			\item Implemented a message version check upon logon which validates if both client and the Crypto Matching Engine messages are aligned.
-			\item Implemented a performance tool for the Crypto Matching Engine which will send a payload of orders and calculate acceptable latency metrics.
-			\item Implemented reconnect and timeout logic for non-blocking client connections in the internal library which is consumed by OMS and the Crypto Matching Engine .
-			\item Implemented buffer(executions, orders, etc.) processing and storage by session in the internal library which is consumed by OMS and the Crypto Matching Engine.
-			\item Designed a Metric service that will query all business metrics for ACE-OMS rebalancing
-			\item Designed ACE-OMS rebalancing flow
-			\item Implemented a ace-fix client in Golang to test inbound and outbound messages from the exchange
+			\item Implemented admin API handlers in the Matching Engine Library to interface between the Matching Engine and OMS.
+			\item Designed and implemented a round-robin connection/reconnection approach in preparation for Matching Engine scalability.
+			\item Implemented a cross-project utility library. Extracted and refactored common helper functions from across projects.
+			\item Implemented a message version check as part of client logon. This validates the message alignment on both client and the Matching Engine.
+			\item Implemented a performance tool for the Matching Engine which will send payloads of order messages using \textit{Unix Sockets} and calculate the overall metrics.
+			\item Implemented a timeout interval controlled non-blocking connect/reconnect for client connections to the Matching Engine. 
+			\item Implemented a session storage to cache executions and orders in a specific session.
+			\item Designed a metric service that will query all business metrics as criteria for organisation rebalancing in multiple OMS. This is part of the OMS scalability to have multiple organisations per OMS.
+			\item Designed the OMS rebalancing flow which discusses scheduled and admin triggered rebalance, OMS state changes, and post-rebalancing behaviours\textit{(includes fetching of open orders in 24/7 venues and fetching of organisation details)}.
+			\item Implemented a FIX test client in \textit{Golang} to test inbound and outbound messages to and from the exchange. It also supports burst mode to benchmark the FIX middleware.
+			\item Designed a subscription model for OMS. This functionality enables the OMS to only process inbound messages from the Matching Engine based on what organisation it's subscribed to.
 		\end{itemize}
 	\end{cvsubsection}
 	\begin{cvsubsection}{Software Engineer}{Retone, Remote}{July 2020 - February 2021}
@@ -202,7 +202,7 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 		\item Implemented a Python based C++ code formatter to be called from Bazel.
 		\item Implemented sharding of multiple guitar string renders to increase
 		the speed of magnetic field computation then after merging it.
-		\item Implemented a Bazel script(Starlark) to do an end to end computation of magnetic fields based on magnetic file input.
+		\item Implemented a Bazel script(Starlark) to do an end-to-end computation of magnetic fields based on magnetic file input.
 		\item Implemented a guitar knob controller which sends and receives data through software based UartReader/Writer, which will then be relayed to the actual MCU.
 	\end{itemize}
 	\end{cvsubsection}
@@ -294,21 +294,12 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 	\end{cvsubsection}
 \end{cvsection}
 
-\begin{cvsection}{Additional Experience and Awards}
-	\color{darkgray}
-	\begin{cvsubsection}{}{}{}
-		\begin{itemize}
-			\item \textbf{1st Prize, 1st Engineering Robotics competition:}  Maze Traversal and Line Following category
-		\end{itemize}
-	\end{cvsubsection}
-\end{cvsection}
-
 \begin{cvsection}{Programming languages and Technologies}
 	\color{darkgray}
 	\begin{cvsubsection}{}{}{}
-		\textbf{Language}(arranged according to proficiency, last 3 ones are basic knowledge)
+		\textbf{Language}
 		\begin{itemize}
-			\item C++11/14/17, C, Kotlin, Python, JavaScript, TypeScript, Solidity, SQL 
+			\item C++11/14/17, Kotlin, Golang, Python, JavaScript, Solidity, SQL 
 		\end{itemize}
 		\textbf{Paradigms}
 		\begin{itemize}
@@ -316,7 +307,7 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 		\end{itemize}
 		\textbf{Libraries}
 		\begin{itemize}
-			\item C++-STL, Boost, Smart Contracts(Corda and Ethereum), Abseil-C++, Radia, Protobuf, Unix Socket Library
+			\item C++-STL, Boost, Smart Contracts(Corda and Ethereum), Abseil-C++, Radia, Protobuf, ZeroMQ, Unix Socket Library
 		\end{itemize}
 		\textbf{Database}
 		\begin{itemize}

@@ -4,27 +4,25 @@
 \usepackage{titlesec}
 \usepackage{xcolor}
 
-
-
 % Set document margins
-\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.6in]{geometry}
+\usepackage[left=0.75in,top=0.5in,right=0.75in,bottom=0.5in]{geometry}
 
-\usepackage[familydefault,light]{Chivo} %% Option 'familydefault' only if the base font of the document is to be sans serif
+\usepackage[familydefault,light]{Chivo}
 
 % Set font face
 \usepackage{fontspec}
 \setmainfont[SmallCapsFeatures={Renderer=Basic},
 Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 
-\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent	
+\usepackage[parfill]{parskip}
 
 % Required for ifthenelse statements
 \usepackage{etoolbox} 
 
-%No Page numbers
+% No Page numbers
 \pagestyle{empty}
 
-%Flexible Tables
+% Flexible Tables
 \usepackage{tabu}
 
 % For custom margins
@@ -32,43 +30,43 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 
 % To customize lists
 \usepackage{enumitem}
-% Remove left margin from lists, suppress vertical item separation and set top 
-% separation to a negative value to suppress a single parskip before lists
 \setlist{leftmargin=*, noitemsep, topsep=-1\parskip}
 
-% For spcaed small caps
+% For microtype
 \usepackage{microtype}
 
-\DeclareMicrotypeSet*{smallcapsi} { 
-	encoding = {OT1,T1,T2A,LY1,OT4,QX,T5,TS1,EU1,EU2},
-	shape    = {sc*,si,scit}
-}
-
-\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent	
 \usepackage{amssymb}
 
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=darkgray,
+	pdftitle={Joseph Alcantara CV},
+}
+
 \titleformat{\section}
-  {\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+{\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
 
 %--------------------------------------------------------------------------------
 %                                    Constants                                  -
 %--------------------------------------------------------------------------------
-\def\afterheaderspace{3pt}
-\def\beforesectionheaderspace{4.75pt}
+\def\afterheaderspace{1pt}
+\def\beforesectionheaderspace{4pt}
 \def\sectionheadermargin{6pt}
 \def\aftersectionheaderspace{-4pt}
 \def\sectionheaderhrlueheight{0.5pt}
 \def\aftersinglelinesubsectionheaderspace{-18.5pt}
 \def\afterdoublelinesubsectionheaderspace{-10pt}
 \def\aftermultilinesubsectionheaderspace{-6pt}
-\def\afteremptysubsectionheaderspace{3pt}
+\def\afteremptysubsectionheaderspace{1pt}
 \def\subsectionmargin{9pt}
-\def\aftersubsectionspace{4pt}
+\def\aftersubsectionspace{2pt}
+
 %--------------------------------------------------------------------------------
 %                            Header Setup and Printing                          -
 %--------------------------------------------------------------------------------
-
-% Address
 \makeatletter
 
 \newcommand\address[1]{\def\@address{#1}}
@@ -78,22 +76,12 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 	\scriptsize{\@address}
 }
 
-\makeatother
-
-% Name
-\makeatletter
-
 \newcommand\name[1]{\def\@name{#1}}
 \name{}
 
 \newcommand\printname{
-	\textbf{\Large\textls[110]{\textsc{\@name}}}
+	\textbf{\Large\textsc{\@name}}
 }
-
-\makeatother
-
-% Contacts
-\makeatletter
 
 \newcommand\contacts[1]{\def\@contacts{#1}}
 \contacts{}
@@ -102,12 +90,9 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 	\scriptsize{\@contacts}
 }
 
-\makeatother
-
-\makeatletter
 \newcommand\makeheader{
 	\begin{center}
-		\begin{tabu} to 1\textwidth { X[l,m] X[2,c,m] X[r,m] }
+		\begin{tabu} to 1\textwidth { X[1,l,m] X[2,c,m] X[1.3,r,m] }
 			\printaddress & \printname & \printcontacts \\
 		\end{tabu}	
 	\end{center}
@@ -118,12 +103,9 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 %--------------------------------------------------------------------------------
 %                            Sections and Subsections                           -
 %--------------------------------------------------------------------------------
-
-% Print a section header
 \makeatletter
 \newenvironment{cvsection}[1]{
 	\vspace*{\beforesectionheaderspace}
-	% Set text margins to equal \tabcolsep (6pt by default)
 	\begin{adjustwidth}{\sectionheadermargin}{\sectionheadermargin}
 		\textsc{\textbf{#1}}
 	\end{adjustwidth}
@@ -132,9 +114,8 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 	\vspace*{\aftersectionheaderspace}
 }{}
 \makeatother
-% Print a subsection
+
 \makeatletter
-% Define toggles checking if titles were defined
 \newtoggle{lefttitledefined}
 \newtoggle{centertitledefined}
 \newtoggle{righttitledefined}
@@ -147,7 +128,6 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 		\begin{tabu} to 1\textwidth { X[l,p] X[c,p] X[r,p] }
 			\textbf{#2} & \textbf{#3} & \textbf{#4} \\
 		\end{tabu}
-		% Add space according to the specidied number of lines
 		\ifnumcomp{#1}{=}{1}{\vspace*{\aftersinglelinesubsectionheaderspace}}{
 			\ifnumcomp{#1}{=}{2}{\vspace*{\afterdoublelinesubsectionheaderspace}}{
 				\vspace*{\aftermultilinesubsectionheaderspace}
@@ -160,171 +140,156 @@ Ligatures={TeX, NoCommon, NoDiscretionary}]{Chivo}
 	\togglefalse{centertitledefined}
 	\togglefalse{righttitledefined}
 	\begin{adjustwidth}{\subsectionmargin}{\subsectionmargin}
-}
-{
+	}
+	{
 	\end{adjustwidth}
 	\vspace*{\aftersubsectionspace}
 }
 \makeatother
 
-%Applicant's Data
+%================================================================================
+%                              APPLICANT'S DATA                                 =
+%================================================================================
+
 \name{Joseph Alcantara}
-\address{Silliman University Campus, Dumaguete City, PH}
-\contacts{(+63)919-846-6985 \linebreak josephnicholasalc@icloud.com}
+\address{Dumaguete City, Philippines \linebreak \href{https://www.github.com/josephnicholas}{github.com/josephnicholas}}
+\contacts{(+63) 919-846-6985 \linebreak joseph.nicholas.r.alcantara@gmail.com}
 
 \begin{document}
-\makeheader
-
-\begin{cvsection}{Employment History}
-	\begin{cvsubsection}{Software Engineer}{Archax, Philippines}{February 2021 - Present}
+	\makeheader
+	
+	%--------------------------------------------------------------------------------
+	%                            PROFESSIONAL SUMMARY                               -
+	%--------------------------------------------------------------------------------
+	\begin{cvsection}{Professional Summary}
+		\begin{cvsubsection}{}{}{}
+			\color{darkgray}
+			Software Engineer with 10+ years of experience building low-latency financial systems, from cryptocurrency matching engines and FIX protocol implementations to distributed post-trade platforms on AWS. Led a team of engineers developing a matching engine for a regulated digital asset exchange, and currently designs event-driven architectures using DynamoDB Streams, Lambda, SQS, and Redis for real-time notification delivery in trading systems. Deep C++ experience spanning codebase modernization (C++98 to C++20), performance profiling with Valgrind and uftrace, and Unix socket-level performance benchmarking.
+		\end{cvsubsection}
+	\end{cvsection}
+	
+	%--------------------------------------------------------------------------------
+	%                            EMPLOYMENT HISTORY                                 -
+	%--------------------------------------------------------------------------------
+	\begin{cvsection}{Employment History}
+		
+		%--- IRESS ---
+		\begin{cvsubsection}{Software Engineer}{Iress, Philippines}{June 2023 -- Present}
+			\color{darkgray}
+			\begin{itemize}
+				\item Designed and implemented an event-driven permission notification system using DynamoDB Streams, Lambda, SQS, and Redis Pub/Sub, delivering real-time permission change events to multiple BFF pods via Server-Sent Events (SSE). Used DynamoDB Streams as the single source of truth to eliminate dual-write risks.
+				\item Identified and resolved an out-of-order message delivery problem in the permission event pipeline caused by partial SQS batch failures during Lambda retries. Implemented version-based idempotency using DynamoDB Stream sequence numbers, allowing consumers to discard stale updates.
+				\item Implemented centralized cache invalidation across multiple BFF pods using FusionCache with Redis ElastiCache as the distributed L2 cache and Redis Pub/Sub backplane.
+				\item Developed backend services for the post-trade allocation system using the BFF pattern with ASP.NET Core, providing position summary and account details to fund managers for trade allocation workflows.
+				\item Identified a race condition in the Trade Summary SSE streaming service where parallel firm snapshot loading set a completion flag prematurely, causing inconsistent data. Proposed fix adopted by the team.
+				\item Developed a performance testing framework for InteropIO (Glue42) post-trade widgets using Playwright with Chrome DevTools Protocol, measuring render time, memory usage, and script execution.
+				\item Led the 64-bit migration of a legacy C++ trading platform, upgrading from C++98 to C++20. Built Python tooling to automate symbol extraction from linker error logs and validate exports for duplicates.
+				\item Built proof-of-concept post-trade widgets using React, ag-grid, and InteropIO (Glue42) to validate cross-widget communication patterns for the next-generation trading UI.
+			\end{itemize}
+		\end{cvsubsection}
+		
+		%--- ARCHAX ---
+		\begin{cvsubsection}{Software Engineer}{Archax, Philippines}{February 2021 -- June 2023}
+			\color{darkgray}
+			\begin{itemize}
+				\item Led a team of 3 engineers developing and maintaining the matching engine for Archax, a regulated digital securities exchange.
+				\item Built a performance benchmarking tool that sends order message payloads over \textit{Unix sockets} and calculates throughput and latency metrics, used to establish baselines and detect regressions.
+				\item Implemented round-robin connection/reconnection logic with configurable timeout intervals and non-blocking connect for matching engine client sessions.
+				\item Implemented message version validation on client login, detecting protocol mismatches before order flow begins and preventing silent message corruption.
+				\item Designed the OMS load balancing architecture for multi-organization support, including a metric collection service for organization-to-OMS rebalancing with scheduled and admin-triggered modes.
+				\item Designed and implemented a subscription model for the OMS, enabling each instance to selectively process only inbound matching engine messages for its subscribed organizations---a prerequisite for horizontal scaling.
+				\item Designed and implemented risk limit management for the OMS, including configurable controls for single-order and daily-aggregate limits.
+				\item Designed and deployed a FIX protocol test client in \textit{Golang} using QuickFIX, supporting standard message validation and burst mode for benchmarking the FIX middleware.
+				\item Initiated CPU profiling of the OMS using \textit{uftrace} and \textit{Callgrind} to identify hot paths, leading to targeted optimizations in the order processing pipeline.
+			\end{itemize}
+		\end{cvsubsection}
+		
+		%--- CRYPTOBLK ---
+		\begin{cvsubsection}{Senior Engineer}{CryptoBLK, Hong Kong}{March 2019 -- March 2021}
+			\color{darkgray}
+			\begin{itemize}
+				\item Integrated the Dilithium post-quantum signature scheme into the Abelian cryptocurrency, replacing select ed25519 computations with lattice-based cryptography for quantum-resistant keys and signatures.
+				\item Integrated quantum-proof linkable ring signatures (\textit{SALRS}) into the Abelian project, advancing post-quantum privacy guarantees.
+				\item Implemented a Solidity ERC-20 token smart contract for the Abelian (ABE) ICO on Ethereum.
+				\item Designed and implemented integration tests, Corda flow tests, and contract tests for the Letter of Credit amendment feature on the Contour trade finance platform. Built the corresponding Corda smart contracts and Spring API endpoints.
+			\end{itemize}
+		\end{cvsubsection}
+		
+		%--- RETONE ---
+		\begin{cvsubsection}{Software Engineer}{Retone, Remote}{July 2020 -- February 2021}
+			\color{darkgray}
+			\begin{itemize}
+				\item Implemented sharding for concurrent magnetic field computations in the Radia engine, parallelizing previously sequential workloads. Developed a software-based UART reader/writer for microcontroller pre-deployment validation.
+			\end{itemize}
+		\end{cvsubsection}
+		
+		%--- LEXMARK ---
+		\begin{cvsubsection}{Firmware Engineer}{Lexmark, Philippines}{November 2018 -- March 2019}
+			\color{darkgray}
+			\begin{itemize}
+				\item Implemented Apple SMTP handling for legacy printers (\textit{Embedded C++}). Migrated build system from Unix Makefiles to \textit{CMake}. Resolved 30+ firmware defects identified by Coverity and SonarQube.
+			\end{itemize}
+		\end{cvsubsection}
+		
+		%--- FIRO & HORIZEN ---
+		\begin{cvsubsection}{Freelance Software Engineer}{Firo \& Horizen, Remote}{January 2018 -- September 2018}
+			\color{darkgray}
+			\begin{itemize}
+				\item Deployed CI/CD pipelines (Travis CI, CircleCI, Jenkins, gitian-builder) producing reproducible builds across 3 platforms. Integrated the MTP protocol upgrade into the ElectrumX wallet server. \textit{(Firo)}
+				\item Integrated Horizen cryptocurrency into the Ledger Nano S hardware wallet. Implemented domain fronting for the Horizen light wallet to bypass network restrictions. \textit{(Horizen)}
+			\end{itemize}
+		\end{cvsubsection}
+		
+		%--- NCR ---
+		\clearpage
+		\begin{cvsubsection}{Software Engineer}{NCR Corporation, Philippines}{August 2012 -- February 2018}
+			\color{darkgray}
+			\begin{itemize}
+				\item Integrated payment terminals (AMEX) and third-party hardware (scales, IBM POS) into NCR self-service checkout systems across deployments including Australia Post, Walmart, and Post Office UK. Primarily MFC C++.
+				\item Built diagnostic tooling (C\# log parser with telnet, predictive test scripts) for IBM POS and configured Jenkins CI for automated nightly builds.
+			\end{itemize}
+		\end{cvsubsection}
+		
+	\end{cvsection}
+	
+	%--------------------------------------------------------------------------------
+	%                                 EDUCATION                                     -
+	%--------------------------------------------------------------------------------
+	\begin{cvsection}{Education}
+		\begin{cvsubsection}{Dumaguete City, Philippines}{Silliman University}{March 2012}
+			\color{darkgray}
+			\begin{itemize}
+				\item B.S in Computer Engineering. Thesis: Android-controlled quadrotor with Bluetooth communication.
+			\end{itemize}
+		\end{cvsubsection}
+		\begin{cvsubsection}{Remote}{ConsenSys Academy}{October 2019}
+			\color{darkgray}
+			\begin{itemize}
+				\item Ethereum Developer Bootcamp. Project: \href{https://github.com/josephnicholas/proposal-dapp}{Proposal DApp}
+			\end{itemize}
+		\end{cvsubsection}
+	\end{cvsection}
+	
+	%--------------------------------------------------------------------------------
+	%                             TECHNICAL SKILLS                                  -
+	%--------------------------------------------------------------------------------
+	\begin{cvsection}{Technical Skills}
 		\color{darkgray}
-		\begin{itemize}
-			\item Implemented Risk Limit Management for Archax OMS.
-			\item Created High-level design Architecture for some OMS features.
-			\item Implemented API handlers in NodeJS to process data from OMS to DB.
-			\item Created Docker images for the Crypto Matching Engine projects to ease developer environment setup and server deployment.
-			\item Implemented admin API handlers in the Matching Engine Library to interface between the Matching Engine and OMS.
-			\item Designed and implemented a round-robin connection/reconnection approach in preparation for Matching Engine scalability.
-			\item Implemented a cross-project utility library. Extracted and refactored common helper functions from across projects.
-			\item Implemented a message version check as part of client logon. This validates the message alignment on both client and the Matching Engine.
-			\item Implemented a performance tool for the Matching Engine which will send payloads of order messages using \textit{Unix Sockets} and calculate the overall metrics.
-			\item Implemented a timeout interval controlled non-blocking connect/reconnect for client connections to the Matching Engine. 
-			\item Implemented a session storage to cache executions and orders in a specific session.
-			\item Designed a metric service that will query all business metrics as criteria for organisation rebalancing in multiple OMS. This is part of the OMS scalability to have multiple organisations per OMS.
-			\item Designed the OMS rebalancing flow which discusses scheduled and admin triggered rebalance, OMS state changes, and post-rebalancing behaviours\textit{(includes fetching of open orders in 24/7 venues and fetching of organisation details)}.
-			\item Implemented a FIX test client in \textit{Golang} to test inbound and outbound messages to and from the exchange. It also supports burst mode to benchmark the FIX middleware.
-			\item Designed a subscription model for OMS. This functionality enables the OMS to only process inbound messages from the Matching Engine based on what organisation it's subscribed to.
-		\end{itemize}
-	\end{cvsubsection}
-	\begin{cvsubsection}{Software Engineer}{Retone, Remote}{July 2020 - February 2021}
-		\color{darkgray}
-	\begin{itemize}
-		\item Implemented a Python based C++ code formatter to be called from Bazel.
-		\item Implemented sharding of multiple guitar string renders to increase
-		the speed of magnetic field computation then after merging it.
-		\item Implemented a Bazel script(Starlark) to do an end-to-end computation of magnetic fields based on magnetic file input.
-		\item Implemented a guitar knob controller which sends and receives data through software based UartReader/Writer, which will then be relayed to the actual MCU.
-	\end{itemize}
-	\end{cvsubsection}
-	\begin{cvsubsection}{Senior Engineer}{CryptoBLK, Hong Kong}{March 2019 - March 2021(Consultant)}
-		\color{darkgray}
-	\begin{itemize}
-		\item Created the ABE token with \textit{Solidity}.
-		\item Integrated the quantum signature scheme Dilithium for Abelian cryptocurrency and exchanged some of the ed25519 computations.
-		\item Created and modified unit-tests and functional with google test and python to further improve code quality.
-		\item Created python scripts to run transaction testing using the built-in JSON RPC.
-		\item Integrated new scheme on quantum proof linkable ring signatures(https://github.com/salrs/salrs).
-		\item Created integration tests, flow test, and contract test and APIs for Corda smart contracts for trade finance applications.
-		\item Implemented backend features on Contour trade finance application specifically in Letter of Credit amendments. \textit{Corda Smart Contracts and Spring}
-	\end{itemize}
-	\end{cvsubsection}
-	\begin{cvsubsection}{Firmware Engineer}{Lexmark, Philippines}{November 2018 - March 2019}
-		\color{darkgray}
-	\begin{itemize}
-		\item Developed a feature to have different handle for Apple SMTP server\textit{(Embedded C++)}.
-		\item Migrated some projects from Unix Makefile to \textit{CMake}.
-		\item Fixed some functional issues on printer firmware code as well as Coverity and Canary issues.
-	\end{itemize}
-	\end{cvsubsection}
-	\begin{cvsubsection}{Software Engineer}{Zcoin, Remote}{July 2018 - September 2018 }
-		\color{darkgray}
-	\begin{itemize}
-		\item DevOps work. Implemented a CI/CD server using Travis CI, Circle CI, Jenkins CI which calls a gitian-builder and results 3 platform builds.
-		\item Integration of new MTP(Merkle Tree Proof) to electrumx server, a python based server for the electrum client.
-	\end{itemize}
-    \end{cvsubsection}
-	\begin{cvsubsection}{Software Engineer}{Horizen, Remote}{January 2018 - June 2018}
-		\color{darkgray}
-	\begin{itemize}
-		\item Integrated Horizen to the Ledger Nano S Hardware Wallet.
-		\item Implemented and integrated Domain fronting with ZenCash Light Wallets\textit{(Arizen wallet, ElectronJS)}.
-		\item Added build capabilities with macOS for Horizen source.
-		\item Developed automated unit tests on Ledger Nano S and Trezor T hardware wallets.
-		\item Integrated advanced daemon specific features for the Horizen Java swing wallet.
-	\end{itemize}
-    \end{cvsubsection}
-	\begin{cvsubsection}{Software Engineer}{NCR Corporation, Philippines}{August 2012 - February 2018}
-		\color{darkgray}
-		\textbf{\textit{Post Office UK, Ltd.}}
-		\begin{itemize}
-			\item Implemented a parser in MFC C++ using the MSXML library to gather data from the service to be shown on the device UI.
-			\item Implemented a scale wrapper for the Avery scale in MFC C++ to integrate the 3rd party scale into the checkout system.
-			\item Created a build machine using Jenkins CI for Post Office UK Integration processes.
-		\end{itemize}
-		\textbf{\textit{Walmart}}
-		\begin{itemize}
-			\item Designed and implemented UI using MFC C++ as language used for the Model and Controller, and XML as for the View.
-			\item Integrated and supported Walmart Mobile Payment for Self Serve Checkout lanes, using MFC C++ and XML.\textit{(Bentonville, AR)}
-			\item Developed a log parser in C\# which uses telnet to connect to the IBM POS and extract the data for efficient log tracing.
-			\item Implemented test scripts for IBM POS to ancticipate changes in messages.
-		\end{itemize}
-		\textbf{\textit{Australia Post Office}}
-		\begin{itemize}
-			\item Developed and integrated AMEX payment in MFC C++ into the Australia Post SST.
-			\item Designed and implemented UI using MFC C++ as language used for the Model and Controller, and XML as for the View.
-		\end{itemize}
-	\end{cvsubsection}
-\end{cvsection}
-
-\begin{cvsection}{Education}
-	\begin{cvsubsection}{Dumaguete City, Philippines}{Silliman University}{June 2007 - March 2012}
-		\color{darkgray}
-		\begin{itemize}
-			\item B.S in Computer Engineering, March 2012
-			\item Undergraduate Coursework: Operating Systems, Data structures and Algorithms, Microcontroller Design, Computer Architecture, C++ Programming, Digital Systems, Control system design
-			\item Thesis work: Android Phone controlled Quadrotor with Bluetooth as medium of communication.
-		\end{itemize}
-	\end{cvsubsection}
-	\begin{cvsubsection}{Remote}{Consensys Academy}{October 2019}
-		\color{darkgray}
-		\begin{itemize}
-			\item Graduated on the October 30 Cohort Bootcamp
-			\item Dapp Development with Ethereum and Solidity
-			\item Project link: https://github.com/josephnicholas/proposal-dapp
-		\end{itemize}
-	\end{cvsubsection}
-\end{cvsection}
-
-\begin{cvsection}{Technical Experience}
-	\color{darkgray}
-	\begin{cvsubsection}{Github Profile}{}{}
-		\begin{itemize}
-			\item www.github.com/josephnicholas
-		\end{itemize}
-	\end{cvsubsection}
-\end{cvsection}
-
-\begin{cvsection}{Programming languages and Technologies}
-	\color{darkgray}
-	\begin{cvsubsection}{}{}{}
-		\textbf{Language}
-		\begin{itemize}
-			\item C++11/14/17, Kotlin, Golang, Python, JavaScript, Solidity, SQL 
-		\end{itemize}
-		\textbf{Paradigms}
-		\begin{itemize}
-			\item Object Oriented Programming, TDD with Catch2 and Google test
-		\end{itemize}
-		\textbf{Libraries}
-		\begin{itemize}
-			\item C++-STL, Boost, Smart Contracts(Corda and Ethereum), Abseil-C++, Radia, Protobuf, ZeroMQ, Unix Socket Library
-		\end{itemize}
-		\textbf{Database}
-		\begin{itemize}
-			\item PostgresSQL, SQLite
-		\end{itemize}
-		\textbf{Tools}
-		\begin{itemize}
-			\item Visual Studio, CLion, IntelliJ, VSCode, JIRA, SVN, Git, Github, Vim, CMake, Bazel, Docker
-		\end{itemize}
-		\textbf{Platform}
-		\begin{itemize}
-			\item Windows OS, macOS, Linux Ubuntu
-		\end{itemize}
-		\textbf{Frameworks}
-		\begin{itemize}
-			\item Qt, Corda, Ethereum, ReactJS(used only for the Solidity developer bootcamp), Spring, NodeJS, MochaJS
-		\end{itemize}
-	\end{cvsubsection}
-\end{cvsection}
-\end{document}  
+		\begin{cvsubsection}{}{}{}
+			\textbf{Languages:} C++ (98/11/14/17/20), C\#/.NET 8, Python, Golang, TypeScript, JavaScript, Solidity, SQL
+			
+			\textbf{Cloud \& Infrastructure:} AWS (Lambda, DynamoDB, DynamoDB Streams, SQS, SNS, EventBridge, ElastiCache Redis, EKS, CloudWatch, IAM), Terraform, Docker, Kubernetes
+			
+			\textbf{Trading \& Financial:} FIX Protocol (OnixS SDK, QuickFIX), Matching Engine development, OMS, Post-trade allocation, Risk management
+			
+			\textbf{Frameworks:} ASP.NET Core, React, Node.js, Corda, Spring, Boost, Abseil, ZeroMQ, Protobuf, FlatBuffers
+			
+			\textbf{Data \& Messaging:} DynamoDB, PostgreSQL, SQLite, Redis (caching + Pub/Sub), FusionCache, Server-Sent Events
+			
+			\textbf{Performance \& Testing:} Valgrind, Callgrind, KCachegrind, uftrace, gprof, Grafana k6, Playwright + CDP, Datadog, Catch2, Google Test, xUnit
+			
+			\textbf{Tools:} Git, CMake, Bazel, Docker, Vim, JetBrains IDEs, Visual Studio, TeamCity, Conan, gdb, Sanitizers
+		\end{cvsubsection}
+	\end{cvsection}
+	
+\end{document}
